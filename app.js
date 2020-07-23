@@ -35,7 +35,7 @@ const rtsIndex = require('./routes/index.router');
 
 mongoose.Promise = global.Promise;
 // ! (product) => (dahab)
-mongoose.connect('mongodb://localhost/dahab', {useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect('mongodb://127.0.0.1:27017/dahab', {useNewUrlParser: true, useFindAndModify: false })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
