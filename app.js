@@ -35,7 +35,7 @@ const rtsIndex = require('./routes/index.router');
 
 mongoose.Promise = global.Promise;
 // ! (product) => (dahab)
-mongoose.connect('mongodb://http://161.35.87.16/dahab', {useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect('mongodb://username:password@mongo-instance-shard-00-00-a4iv8.mongodb.net:27017,mongo-instance-shard-00-01-a4iv8.mongodb.net:27017,mongo-instance-shard-00-02-a4iv8.mongodb.net:27017/test?ssl=true&replicaSet=mongo-instance-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true, useFindAndModify: false })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
