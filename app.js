@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var restful = require('node-restful');
 var methodOverride = require('method-override');
 var cors = require('cors');
-var MongoClient = require('mongodb').MongoClient;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -26,6 +25,28 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
+
+// Add headers
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
+
 // login
 require('./config/config');
 require('./models/db');
@@ -36,7 +57,7 @@ const rtsIndex = require('./routes/index.router');
 
 mongoose.Promise = global.Promise;
 // ! (product) => (dahab)
-mongoose.connect('mongodb://username:password@mongo-instance-shard-00-00-a4iv8.mongodb.net:27017,mongo-instance-shard-00-01-a4iv8.mongodb.net:27017,mongo-instance-shard-00-02-a4iv8.mongodb.net:27017/test?ssl=true&replicaSet=mongo-instance-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect('mongodb://username:password@mongo-instance-shard-00-00-a4iv8.mongodb.net:27017,mongo-instance-shard-00-01-a4iv8.mongodb.net:27017,mongo-instance-shard-00-02-a4iv8.mongodb.net:27017/test?ssl=true&replicaSet=mongo-instance-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true, useFindAndModify: false })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
