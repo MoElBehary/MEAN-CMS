@@ -30,7 +30,7 @@ var app = express();
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+  res.setHeader('Access-Control-Allow-Origin', 'https://dahabegypt.net');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -45,7 +45,6 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-
 
 // login
 require('./config/config');
