@@ -25,27 +25,8 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
-var _ = require('underscore');
-function allowCrossDomain(req, res, next) {
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
-  var origin = req.headers.origin;
-  if (_.contains(app.get('allowed_origins'), origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-
-  if (req.method === 'OPTIONS') {
-    res.send(200);
-  } else {
-    next();
-  }
-}
-
-app.configure(function () {
-  app.use(express.logger());
-  app.use(express.bodyParser());
-  app.use(allowCrossDomain);
-});
+app.use(cors({ origin: '*' }));
 
 // login
 require('./config/config');
