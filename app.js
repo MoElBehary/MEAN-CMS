@@ -26,7 +26,7 @@ var pagesImg = require('./routes/pages-img');
 var app = express();
 
 // use it before all route definitions
-app.use(cors({ origin: 'null' }));
+// app.use(cors({ origin: 'null' }));
 
 // login
 require('./config/config');
@@ -55,7 +55,8 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: 'null' }));
 app.use(passport.initialize()); //login
 app.use('/api', rtsIndex); //login
 app.use('/', index);
