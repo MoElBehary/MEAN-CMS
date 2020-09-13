@@ -26,7 +26,7 @@ var pagesImg = require('./routes/pages-img');
 var app = express();
 
 // use it before all route definitions
-app.use(cors({ origin: 'https://161.35.87.16/api' }));
+app.use(cors({ origin: 'null' }));
 
 // login
 require('./config/config');
