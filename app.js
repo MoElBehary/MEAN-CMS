@@ -25,8 +25,35 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
-// use it before all route definitions
-// app.use(cors({ origin: 'null' }));
+app.all('*', function (req, res, next) {
+  /**
+   * Response settings
+   * @type {Object}
+   */
+  var responseSettings = {
+    "AccessControlAllowOrigin": req.headers.origin,
+    "AccessControlAllowHeaders": "Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
+    "AccessControlAllowMethods": "POST, GET, PUT, DELETE, OPTIONS",
+    "AccessControlAllowCredentials": true
+  };
+
+  /**
+   * Headers
+   */
+  res.header("Access-Control-Allow-Credentials", responseSettings.AccessControlAllowCredentials);
+  res.header("Access-Control-Allow-Origin", responseSettings.AccessControlAllowOrigin);
+  res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
+  res.header("Access-Control-Allow-Methods", (req.headers['access-control-request-method']) ? req.headers['access-control-request-method'] : responseSettings.AccessControlAllowMethods);
+
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+
+
+});
 
 // login
 require('./config/config');
@@ -55,8 +82,7 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(cors());
-app.use(cors({ origin: 'null' }));
+app.use(cors());
 app.use(passport.initialize()); //login
 app.use('/api', rtsIndex); //login
 app.use('/', index);
