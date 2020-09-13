@@ -25,8 +25,27 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
-// use it before all route definitions
-app.use(cors({ origin: 'https://161.35.87.16' }));
+var _ = require('underscore');
+function allowCrossDomain(req, res, next) {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+
+  var origin = req.headers.origin;
+  if (_.contains(app.get('allowed_origins'), origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  } else {
+    next();
+  }
+}
+
+app.configure(function () {
+  app.use(express.logger());
+  app.use(express.bodyParser());
+  app.use(allowCrossDomain);
+});
 
 // login
 require('./config/config');
@@ -55,8 +74,7 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(cors());
-
+app.use(cors());
 app.use(passport.initialize()); //login
 app.use('/api', rtsIndex); //login
 app.use('/', index);
@@ -76,7 +94,6 @@ app.use('/api/categories/img', express.static(__dirname + '/assets/img/categorie
 app.use('/api/pages/img', express.static(__dirname + '/assets/img/pages'));
 app.use('/api/products/img', express.static(__dirname + '/assets/img/products'));
 app.use('/api/blog-topics/img', express.static(__dirname + '/assets/img/blog'));
-
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
