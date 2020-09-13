@@ -25,6 +25,9 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
+// use it before all route definitions
+app.use(cors({ origin: 'http://localhost:8888' }));
+
 // login
 require('./config/config');
 require('./models/db');
@@ -72,28 +75,6 @@ app.use('/api/categories/img', express.static(__dirname + '/assets/img/categorie
 app.use('/api/pages/img', express.static(__dirname + '/assets/img/pages'));
 app.use('/api/products/img', express.static(__dirname + '/assets/img/products'));
 app.use('/api/blog-topics/img', express.static(__dirname + '/assets/img/blog'));
-
-// Add headers
-app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://dahabegypt.net');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
-  next();
-});
-
-
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
