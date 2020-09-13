@@ -26,7 +26,7 @@ var pagesImg = require('./routes/pages-img');
 var app = express();
 
 // use it before all route definitions
-app.use(cors({ origin: 'http://localhost:8888' }));
+app.use(cors({ origin: 'https://dahabegypt.net/' }));
 
 // login
 require('./config/config');
