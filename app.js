@@ -24,16 +24,7 @@ var productPage = require('./routes/product-page');
 var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
-
-app.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.header("Access-Control-Allow-Methods", "DELETE, PUT, POST");
-  next();
-}); 
-
-
+app.use(cors());
 // login
 require('./config/config');
 require('./models/db');
@@ -61,7 +52,7 @@ app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+
 app.use(passport.initialize()); //login
 app.use('/api', rtsIndex); //login
 app.use('/', index);
