@@ -7,26 +7,17 @@
 var app = require('../app');
 var debug = require('debug')('node-rest-api:server');
 var http = require('http');
-var fs = require('fs'),
-    https = require('https');
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
-var privateKey = fs.readFileSync('privatekey.pem');
-var certificate = fs.readFileSync('certificate.pem');
-
-https.createServer({
-  key: privateKey,
-  cert: certificate
-}, app).listen(port);
 
 var server = http.createServer(app);
 
