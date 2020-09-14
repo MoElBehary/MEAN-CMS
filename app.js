@@ -25,6 +25,7 @@ var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
 var app = express();
 
+
 // login
 require('./config/config');
 require('./models/db');
