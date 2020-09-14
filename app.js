@@ -23,13 +23,6 @@ var contactPage = require('./routes/contact-page');
 var productPage = require('./routes/product-page');
 var categoryPage = require('./routes/category-page');
 var pagesImg = require('./routes/pages-img');
-
-var https = require('https');
-var privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
-var credentials = { key: privateKey, cert: certificate };
-
-
 var app = express();
 
 // login
@@ -118,8 +111,5 @@ app.use((err, req, res, next) => {
     console.log(err);
   }
 });
-
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(8443);
 
 module.exports = app;
